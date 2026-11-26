@@ -83,25 +83,27 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser to see t
 # 1. Navigate to backend directory
 cd backend
 
-# 2. Create and activate virtual environment
-python -m venv venv
-# On Windows:
-.\venv\Scripts\activate
-
-# 3. Install dependencies
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# 4. Start the FastAPI server
+# 3. Start the FastAPI server
 uvicorn app.main:app --reload --port 8000
 ```
-Open **[http://localhost:8000/docs](http://localhost:8000/docs)** to test the interactive OpenAPI endpoints.
+Open **[http://localhost:8000/docs](http://localhost:8000/docs)** to test the interactive OpenAPI endpoints:
+- `GET /api/audit/sample` — Instant 1-click benchmark case with live coordinate bounding boxes
+- `POST /api/audit/analyze` — Upload clinic encounter note, MRI report, and insurer policy PDFs
+- `GET /api/audit/mock` — Mock data endpoint for rapid UI development
 
 ---
 
 ## 📊 Measured Evaluation Results (Hackathon Criterion #2)
 Run the automated benchmark suite:
 ```bash
-python -m backend.evals.run_benchmark
+python backend/evals/run_benchmark.py
+```
+Or run the full test suite with pytest:
+```bash
+pytest backend/tests/
 ```
 
 | Metric | Manual Specialist Review | MedAuth AI + $15/hr Staff | Improvement |
