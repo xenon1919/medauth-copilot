@@ -1,0 +1,39 @@
+name: MedAuth AI - CI & Benchmark Evals
+
+on:
+  push:
+    branches: [ main, feat/backend ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-and-eval:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install reportlab
+
+      - name: Generate Synthetic Clinical PDFs
+        run: |
+          python datasets/generate_sample_pdfs.py
+
+      - name: Run Backend Pytest Suite
+        run: |
+          pytest backend/tests/ -v
+
+      - name: Run Automated Evaluation Benchmark Matrix
+        run: |
+          python backend/evals/run_benchmark.py
