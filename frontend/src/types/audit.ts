@@ -27,6 +27,7 @@ export interface AuditCaseData {
   patient_name: string;
   patient_dob: string;
   procedure: string;
+  specialty?: string;
   cpt_code: string;
   icd10_code: string;
   insurer: string;
