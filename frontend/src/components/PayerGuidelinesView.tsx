@@ -155,38 +155,38 @@ export const PayerGuidelinesView: React.FC = () => {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-slate-100">
       {/* Header Banner */}
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-slate-800/80 bg-[#0F172A]/90 backdrop-blur-xl p-6 shadow-xl">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-700 shadow-xs">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/30">
                 <BookOpen className="h-5 w-5" />
               </span>
-              <h2 className="text-xl font-black tracking-tight text-slate-900">
+              <h2 className="text-xl font-black tracking-tight text-white">
                 Payer Clinical Policy Bulletins (CPB) Library
               </h2>
             </div>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-400">
               Deterministic Boolean rule specifications deconstructed from published commercial insurer guidelines.
             </p>
           </div>
 
           <div className="relative w-72">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
             <input
               type="text"
               placeholder="Search by payer, CPT, specialty..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-xl border border-slate-300 pl-9 pr-4 py-2 text-xs text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none shadow-xs"
+              className="w-full rounded-xl border border-slate-700 bg-slate-900/90 pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none shadow-inner"
             />
           </div>
         </div>
 
         {/* Category Pills */}
-        <div className="mt-4 flex flex-wrap items-center gap-2 pt-3 border-t border-slate-100">
+        <div className="mt-4 flex flex-wrap items-center gap-2 pt-3 border-t border-slate-800">
           {categories.map((cat) => (
             <button
               key={cat.key}
@@ -194,8 +194,8 @@ export const PayerGuidelinesView: React.FC = () => {
               onClick={() => setSelectedCategory(cat.key)}
               className={`rounded-xl px-3 py-1.5 text-xs font-bold transition ${
                 selectedCategory === cat.key
-                  ? "bg-slate-900 text-white shadow-xs"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  ? "bg-gradient-to-r from-indigo-600 to-cyan-500 text-white shadow-md shadow-indigo-600/30"
+                  : "bg-slate-900 text-slate-400 hover:text-white border border-slate-800"
               }`}
             >
               {cat.label}
@@ -207,55 +207,53 @@ export const PayerGuidelinesView: React.FC = () => {
       {/* Policy Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filtered.map((item) => {
-          const isExpanded = expandedId === item.id;
-
           return (
             <div
               key={item.id}
-              className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-xs hover:border-indigo-200 transition"
+              className="flex flex-col justify-between rounded-2xl border border-slate-800/90 bg-[#0F172A]/90 backdrop-blur-xl p-6 shadow-xl hover:border-cyan-500/40 transition"
             >
               <div>
                 {/* Header */}
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="rounded-lg bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-700">
+                      <span className="rounded-lg bg-indigo-950/80 px-2.5 py-0.5 text-[10px] font-bold text-cyan-300 border border-indigo-700/50 font-mono">
                         {item.id}
                       </span>
-                      <span className="rounded-lg bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-600">
+                      <span className="rounded-lg bg-slate-800 px-2.5 py-0.5 text-[10px] font-bold text-slate-300 border border-slate-700">
                         {item.payer}
                       </span>
                     </div>
-                    <h3 className="mt-2 text-base font-bold text-slate-900 leading-snug">
+                    <h3 className="mt-2 text-base font-bold text-white leading-snug">
                       {item.title}
                     </h3>
                     <p className="mt-0.5 text-xs text-slate-400">
-                      Applicable Codes: <strong className="text-slate-700">{item.cpt}</strong>
+                      Applicable Codes: <strong className="text-cyan-300 font-mono">{item.cpt}</strong>
                     </p>
                   </div>
 
-                  <span className="shrink-0 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200">
+                  <span className="shrink-0 rounded-full bg-emerald-950/80 px-2.5 py-0.5 text-[10px] font-bold text-emerald-300 border border-emerald-500/40 font-mono">
                     {item.status}
                   </span>
                 </div>
 
                 {/* Prerequisite Criteria List */}
                 <div className="mt-4 space-y-2.5">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 font-mono">
                     Mandatory Policy Criteria (AST Boolean Tree):
                   </p>
                   {item.rules.map((rule, idx) => (
                     <div
                       key={idx}
-                      className="rounded-xl border border-slate-100 bg-slate-50/80 p-3 text-xs"
+                      className="rounded-xl border border-slate-800/80 bg-slate-950/70 p-3 text-xs"
                     >
                       <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
                         <div className="space-y-1">
-                          <p className="font-semibold text-slate-800 leading-snug">
+                          <p className="font-semibold text-slate-200 leading-snug">
                             {rule.text}
                           </p>
-                          <p className="font-mono text-[10px] text-indigo-700 bg-indigo-50/80 px-2 py-0.5 rounded border border-indigo-100/60 inline-block">
+                          <p className="font-mono text-[10px] text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40 inline-block">
                             AST: {rule.ast}
                           </p>
                         </div>
@@ -265,23 +263,23 @@ export const PayerGuidelinesView: React.FC = () => {
                 </div>
 
                 {/* Common Denial Triggers & Strategy */}
-                <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50/60 p-3 text-xs text-amber-900">
-                  <div className="flex items-center gap-1.5 font-bold mb-1">
-                    <AlertCircle className="h-4 w-4 text-amber-600" />
+                <div className="mt-4 rounded-xl border border-amber-600/40 bg-amber-950/20 p-3 text-xs text-amber-200">
+                  <div className="flex items-center gap-1.5 font-bold mb-1 text-amber-300">
+                    <AlertCircle className="h-4 w-4 text-amber-400" />
                     Common Denial Code: {item.denialCode}
                   </div>
-                  <p className="text-[11px] text-amber-800 leading-relaxed">
+                  <p className="text-[11px] text-amber-100/90 leading-relaxed">
                     <strong>Appeal Strategy:</strong> {item.appealStrategy}
                   </p>
                 </div>
               </div>
 
               {/* Card Footer */}
-              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-                <span>Effective: {item.effective}</span>
-                <span className="font-semibold text-indigo-600 flex items-center gap-1">
+              <div className="mt-5 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                <span className="font-mono text-[11px]">Effective: {item.effective}</span>
+                <span className="font-semibold text-cyan-400 flex items-center gap-1">
                   Verified CPB Specification
-                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
+                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
                 </span>
               </div>
             </div>

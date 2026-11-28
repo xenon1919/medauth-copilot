@@ -269,13 +269,13 @@ export const IntakeDropzone: React.FC<IntakeDropzoneProps> = ({
   };
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div className="rounded-xl border border-slate-800/80 bg-[#0B1323]/90 p-4 shadow-xl text-slate-200">
       <div className="mb-3 flex items-center justify-between">
         <div>
-          <h2 className="text-sm font-bold text-slate-900">
+          <h2 className="text-sm font-bold text-white">
             Document Intake & Parsing
           </h2>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-400">
             Upload records to audit against insurer guidelines
           </p>
         </div>
@@ -283,7 +283,7 @@ export const IntakeDropzone: React.FC<IntakeDropzoneProps> = ({
         <button
           onClick={onAnalyze}
           disabled={isAnalyzing}
-          className="rounded-lg bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-700 disabled:opacity-50 transition"
+          className="rounded-lg bg-indigo-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-md shadow-indigo-600/30 hover:bg-indigo-500 disabled:opacity-50 transition"
         >
           {isAnalyzing ? "Auditing Records..." : "Re-Audit All"}
         </button>
@@ -292,7 +292,7 @@ export const IntakeDropzone: React.FC<IntakeDropzoneProps> = ({
       <div className="mb-3">
         <label
           htmlFor="document-category"
-          className="mb-1 block text-xs font-semibold text-slate-700"
+          className="mb-1 block text-xs font-semibold text-slate-300"
         >
           Document type
         </label>
@@ -303,7 +303,7 @@ export const IntakeDropzone: React.FC<IntakeDropzoneProps> = ({
           onChange={(event) =>
             setCategory(event.target.value as DocumentCategory)
           }
-          className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 outline-none focus:border-indigo-400"
+          className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-xs text-white outline-none focus:border-cyan-400 font-mono"
         >
           <option value="EHR_NOTE">Doctor Visit Note</option>
           <option value="LAB_IMAGING">MRI / Lab Report</option>
@@ -315,24 +315,24 @@ export const IntakeDropzone: React.FC<IntakeDropzoneProps> = ({
         {docs.map((doc) => (
           <div
             key={doc.id}
-            className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 p-2.5 hover:bg-white hover:border-indigo-300 transition"
+            className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/80 p-2.5 hover:border-cyan-500/40 transition"
           >
             <div className="flex min-w-0 items-center gap-2.5">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-indigo-100 text-indigo-700">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-950/80 text-cyan-400 border border-indigo-700/50">
                 {doc.status === "PROCESSING" ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : doc.status === "FAILED" ? (
-                  <FileWarning className="h-4 w-4 text-red-600" />
+                  <FileWarning className="h-4 w-4 text-rose-400" />
                 ) : (
                   <FileCheck className="h-4 w-4" />
                 )}
               </div>
 
               <div className="min-w-0">
-                <p className="text-xs font-semibold text-slate-800">
+                <p className="text-xs font-semibold text-white">
                   {doc.title}
                 </p>
-                <p className="truncate text-[11px] text-slate-500">
+                <p className="truncate text-[11px] text-slate-400 font-mono">
                   {doc.filename} &bull; {doc.size}
                   {doc.pageCount
                     ? ` • ${doc.pageCount} pages`
@@ -342,12 +342,12 @@ export const IntakeDropzone: React.FC<IntakeDropzoneProps> = ({
             </div>
 
             <span
-              className={`shrink-0 rounded border px-2 py-0.5 text-[10px] font-bold ${
+              className={`shrink-0 rounded border px-2 py-0.5 text-[10px] font-bold font-mono ${
                 doc.status === "PARSED"
-                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                  ? "bg-emerald-950/80 text-emerald-300 border-emerald-500/40"
                   : doc.status === "FAILED"
-                  ? "bg-red-50 text-red-700 border-red-200"
-                  : "bg-blue-50 text-blue-700 border-blue-200"
+                  ? "bg-rose-950/80 text-rose-300 border-rose-500/40"
+                  : "bg-cyan-950/80 text-cyan-300 border-cyan-500/40"
               }`}
             >
               {doc.status}
@@ -381,27 +381,27 @@ export const IntakeDropzone: React.FC<IntakeDropzoneProps> = ({
         }}
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
-        className={`mt-3 flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-4 transition ${
+        className={`mt-3 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-4 transition ${
           isDragging
-            ? "border-indigo-500 bg-indigo-50"
-            : "border-slate-300 bg-slate-50/50 hover:border-indigo-400 hover:bg-indigo-50/20"
+            ? "border-cyan-400 bg-cyan-950/30"
+            : "border-slate-700 bg-slate-900/40 hover:border-cyan-500/60 hover:bg-slate-900/70"
         }`}
       >
-        <UploadCloud className="h-6 w-6 text-slate-400" />
+        <UploadCloud className="h-6 w-6 text-cyan-400" />
 
-        <p className="mt-1 text-xs font-medium text-slate-700">
+        <p className="mt-1 text-xs font-medium text-slate-200">
           Drop additional clinical PDFs here
         </p>
 
-        <p className="text-[10px] text-slate-400">
+        <p className="text-[10px] text-slate-400 font-mono">
           Or click to browse • Multiple PDFs • Up to 25 MB each
         </p>
       </div>
 
       {error && (
-        <div className="mt-3 flex gap-2 rounded-lg border border-red-200 bg-red-50 p-2.5">
-          <FileWarning className="h-4 w-4 shrink-0 text-red-600" />
-          <p className="text-xs text-red-700">{error}</p>
+        <div className="mt-3 flex gap-2 rounded-lg border border-rose-500/40 bg-rose-950/40 p-2.5 text-rose-300">
+          <FileWarning className="h-4 w-4 shrink-0 text-rose-400" />
+          <p className="text-xs">{error}</p>
         </div>
       )}
     </div>
